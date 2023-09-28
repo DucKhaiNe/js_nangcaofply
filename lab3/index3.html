@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calc Average Dog Age</title>
+</head>
+<body>
+    <h1>Calc Average Dog Age</h1>
+    
+    <label for="dogAges">Nhập danh sách tuổi của chó (cách nhau bởi dấu phẩy):</label>
+    <input type="text" id="dogAges" placeholder="Ví dụ: 5, 2, 4, 1, 15, 8, 3">
+    <button onclick="calculateAverageAge()">Tính Tuổi Trung Bình</button>
+    
+    <p id="result"></p>
+
+    <script>
+        function calcAverageHumanAge(ages) {
+            // Bước 1: Tính tuổi của chó theo tuổi của con người
+            const dogAgesInHumanYears = ages.map(age => (age <= 2 ? age * 2 : 16 + age * 4));
+            
+            // Bước 2: Loại trừ chó có tuổi dưới 18
+            const adultDogAges = dogAgesInHumanYears.filter(age => age >= 18);
+            
+            // Bước 3: Tính tuổi trung bình của các chó trưởng thành
+            if (adultDogAges.length > 0) {
+                const sumOfAges = adultDogAges.reduce((total, age) => total + age, 0);
+                const averageAge = sumOfAges / adultDogAges.length;
+                return averageAge.toFixed(2);
+            } else {
+                return "Không có chó trưởng thành nào trong danh sách.";
+            }
+        }
+
+        function calculateAverageAge() {
+            const dogAgesInput = document.getElementById("dogAges").value;
+            const dogAgesArray = dogAgesInput.split(",").map(age => parseInt(age.trim()));
+            const resultElement = document.getElementById("result");
+            const averageAge = calcAverageHumanAge(dogAgesArray);
+
+            if (!isNaN(averageAge)) {
+                resultElement.textContent = `Tuổi trung bình của các chó trưởng thành là: ${averageAge} tuổi`;
+            } else {
+                resultElement.textContent = "Vui lòng nhập danh sách tuổi của chó hợp lệ.";
+            }
+        }
+    </script>
+</body>
+</html>
+

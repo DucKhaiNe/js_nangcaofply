@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Football Game</title>
+</head>
+<body>
+    <h1>Football Game Results</h1>
+    <div id="results"></div>
+
+    <script>
+        // Bạn có thể dán mã JavaScript ở đây
+        const players1 = ['Neuer', 'Kimmich', 'Sule', 'Alaba', 'Davies', 'Goretzka', 'Muller', 'Sané', 'Gnabry', 'Lewandowski'];
+        const players2 = ['Oblak', 'Trippier', 'Hermoso', 'Savic', 'Renan Lodi', 'Koke', 'Herrera', 'Lemar', 'Joao Felix', 'Griezmann'];
+
+        const gk1 = players1[0];
+        const fieldPlayers1 = players1.slice(1);
+
+        const gk2 = players2[0];
+        const fieldPlayers2 = players2.slice(1);
+
+        const allPlayers = [...players1, ...players2];
+
+        const substitutions = ['Thiago', 'Coutinho', 'Perisic'];
+        const players1Final = [...players1, ...substitutions];
+
+        const game = {
+          odds: {
+            team1: 2.5,
+            draw: 3.2,
+            team2: 2.8,
+          },
+        };
+
+        const { team1, draw, team2 } = game.odds;
+
+        function printGoals(...scorers) {
+          for (const [index, scorer] of scorers.entries()) {
+            console.log(`Goal ${index + 1}: ${scorer}`);
+          }
+        }
+
+        const winner = team1 < team2 ? 'team1' : team2 < team1 ? 'team2' : 'draw';
+
+        // Hiển thị kết quả trên trang HTML
+        const resultsElement = document.getElementById('results');
+        resultsElement.innerHTML = `
+          <p>Goal Scorers: Davies, Muller, Lewandowski, Kimmich</p>
+          <p>The winning team is: ${winner}</p>
+        `;
+    </script>
+</body>
+</html>

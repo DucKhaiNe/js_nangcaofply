@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dog Food Analyzer</title>
+</head>
+<body>
+    <h1>Dog Food Analyzer</h1>
+
+    <label for="dogData">Nhập thông tin về chó (JSON):</label>
+    <textarea id="dogData" placeholder='[{"name": "Fido", "weight": 22, "owner": "Sarah"}, ...]'></textarea>
+
+    <button onclick="analyzeDogFood()">Phân Tích Thức Ăn Chó</button>
+
+    <h2>Kết Quả</h2>
+    <p id="result"></p>
+
+    <script>
+        function analyzeDogFood() {
+            const dogDataInput = document.getElementById("dogData").value;
+            let dogs = [];
+
+            try {
+                dogs = JSON.parse(dogDataInput);
+            } catch (error) {
+                document.getElementById("result").textContent = "Dữ liệu không hợp lệ. Vui lòng nhập JSON đúng định dạng.";
+                return;
+            }
+
+            dogs.forEach(dog => {
+                dog.recommendedFood = Math.round(dog.weight ** 0.75 * 28);
+            });
+
+            const sarahsDog = dogs.find(dog => dog.owner === 'Sarah');
+            if (sarahsDog) {
+                if (sarahsDog.recommendedFood > sarahsDog.weight) {
+                    document.getElementById("result").textContent = `${sarahsDog.name} ăn quá ít!`;
+                } else if (sarahsDog.recommendedFood < sarahsDog.weight) {
+                    document.getElementById("result").textContent = `${sarahsDog.name} ăn quá nhiều!`;
+                } else {
+                    document.getElementById("result").textContent = `${sarahsDog.name} ăn đúng khẩu phần ăn khuyến nghị.`;
+                }
+            }
+
+            const ownersEatTooMuch = [];
+            const ownersEatTooLittle = [];
+
+            dogs.forEach(dog => {
+                if (dog.recommendedFood > dog.weight) {
+                    ownersEatTooLittle.push(dog.owner);
+                } else if (dog.recommendedFood < dog.weight) {
+                    ownersEatTooMuch.push(dog.owner);
+                }
+            });
+
+            let resultText = "";
+
+            if (ownersEatTooMuch.length > 0) {
+                resultText += `${ownersEatTooMuch.join(' and ')}'s dogs ăn quá nhiều! `;
+            }
+
+            if (ownersEatTooLittle.length > 0) {
+                resultText += `${ownersEatTooLittle.join(' and ')}'s dogs ăn quá ít!`;
+            }
+
+            document.getElementById("result").textContent += resultText;
+        }
+    </script>
+</body>
+</html>

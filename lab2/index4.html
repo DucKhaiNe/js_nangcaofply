@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Change Color on Click</title>
+</head>
+<body>
+    <h1>Header Text</h1>
+
+    <script>
+        (function () {
+            const header = document.querySelector('h1');
+            const toggleColor = () => {
+                header.style.color = header.style.color === 'red' ? 'blue' : 'red';
+            };
+            
+            document.body.addEventListener('click', toggleColor);
+        })();
+    </script>
+</body>
+</html>
